@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -23,13 +25,18 @@ import java.net.DatagramPacket;
 
 import java.net.DatagramSocket;
 
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
     private SeekBar seekbar1,seekbar2,seekbar3,seekbar4;
     private EditText edittext1;
+    private Button button;
     private TextView textview;
+    private Socket socket=null;
+    private boolean isconncet=true;
+    private OutputStream outputStream=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +47,46 @@ public class MainActivity extends AppCompatActivity {
         seekbar4=(SeekBar)findViewById(R.id.seekBar4);
         edittext1=(EditText)findViewById(R.id.editText);
         textview=(TextView)findViewById(R.id.textView);
+        button=(Button)findViewById(R.id.button);
         seekbar1.setProgress(0);
         seekbar2.setProgress(50);
         seekbar3.setProgress(50);
         seekbar4.setProgress(50);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isconncet) {
+                    isconncet=false;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                socket = new Socket(edittext1.getText().toString(), 80);
+                            } catch (IOException e) {
+
+                            }
+                        }
+                    }).start();
+                    button.setText("断开");
+                }
+                else{
+                    isconncet=true;
+                    if(socket!=null)
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+
+                    }
+                    button.setText("连接");
+                    socket=null;
+                }
+            }
+        });
         seekbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress()+"" );
-                UdpClient("a" + seekBar.getProgress() + " ");
+                UdpClient("a" + seekBar.getProgress() + "!");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -61,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress() + " ");
-                UdpClient("b" + seekBar.getProgress() + " ");
+                UdpClient("b" + seekBar.getProgress() + "!");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -74,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress() + " ");
-                UdpClient("c" + seekBar.getProgress() + " ");
+                UdpClient("c" + seekBar.getProgress() + "!");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -87,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress() + " ");
-                UdpClient("d" + seekBar.getProgress() + " ");
+                UdpClient("d" + seekBar.getProgress() + "!");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -98,54 +136,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    public void UdpClient(final String sendStr){
-         final String netAddress = edittext1.getText().toString();
-         final int PORT = 8081;
+    public void UdpClient(final String sendStr) {
+        if (socket != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        outputStream = socket.getOutputStream();
+                        outputStream.write(sendStr.getBytes());
+                    } catch (IOException e) {
 
-        new Thread ( new Runnable(){
-            @Override
-            public void run() {
-                DatagramPacket datagramPacket = null;
-                DatagramSocket datagramSocket = null;
-                try {
-                    datagramSocket = new DatagramSocket();
-                    byte[] buf = sendStr.getBytes();
-                    InetAddress address = InetAddress.getByName(netAddress);
-                    datagramPacket = new DatagramPacket(buf, buf.length, address, PORT);
-                    datagramSocket.send(datagramPacket);
-                    byte[] receBuf = new byte[1024];
-                    DatagramPacket recePacket = new DatagramPacket(receBuf, receBuf.length);
-                    datagramSocket.receive(recePacket);
-                    String receStr = new String(recePacket.getData(), 0, recePacket.getLength());
-
-                    //获取服务端ip
-                    // String serverIp = recePacket.getAdress();
-                } catch (
-                        UnknownHostException e
-                        )
-                {
-                    e.printStackTrace();
-                } catch (
-                        SocketException e
-                        )
-                {
-                    e.printStackTrace();
-                } catch (
-                        IOException e
-                        )
-                {
-                    e.printStackTrace();
-                } finally
-                {
-                    // 关闭socket
-                    if (datagramSocket != null) {
-                        datagramSocket.close();
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
-
 
 
 
