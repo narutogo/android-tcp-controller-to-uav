@@ -113,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
                     InetAddress address = InetAddress.getByName(netAddress);
                     datagramPacket = new DatagramPacket(buf, buf.length, address, PORT);
                     datagramSocket.send(datagramPacket);
-                    byte[] receBuf = new byte[1024];
-                    DatagramPacket recePacket = new DatagramPacket(receBuf, receBuf.length);
-                    datagramSocket.receive(recePacket);
-                    String receStr = new String(recePacket.getData(), 0, recePacket.getLength());
 
                     //获取服务端ip
                     // String serverIp = recePacket.getAdress();
