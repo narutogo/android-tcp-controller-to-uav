@@ -75,6 +75,11 @@
                 android:id="@+id/instruction"
                 android:layout_weight="0.65" />
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></LinearLayout>
+
             <Button
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
@@ -97,6 +102,22 @@
                 android:layout_weight="0.51" />
 
         </LinearLayout>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="51dp"
+            android:layout_height="wrap_content"
+            android:text="heioff"
+            android:id="@+id/heioff"
+            android:layout_gravity="right" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="heion"
+            android:id="@+id/heion"
+            android:layout_gravity="center_horizontal" />
 
         <SeekBar
             android:layout_width="match_parent"
