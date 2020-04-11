@@ -134,15 +134,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 heiflag=true;
-                seekbar1.setProgress(pid_throttle);
-                UdpClient("B1".toString() + "!");
+              seekbar3.setProgress(75);
+                seekbar4.setProgress(50);
+               UdpClient("B1".toString() + "!");
             }
         });
         heioff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 heiflag=false;
-                seekbar1.setProgress(50);
+                seekbar3.setProgress(50);
+                seekbar4.setProgress(50);
                 UdpClient("B0".toString() + "!");
             }
         });

@@ -107,7 +107,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="51dp"
             android:layout_height="wrap_content"
-            android:text="heioff"
+            android:text="loff"
             android:id="@+id/heioff"
             android:layout_gravity="right" />
 
@@ -115,7 +115,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="heion"
+            android:text="lon"
             android:id="@+id/heion"
             android:layout_gravity="center_horizontal" />
 
