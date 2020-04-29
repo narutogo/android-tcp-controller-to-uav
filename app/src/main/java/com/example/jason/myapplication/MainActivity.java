@@ -1,5 +1,5 @@
 package com.example.jason.myapplication;
-
+import io.github.controlwear.virtual.joystick.android.JoystickView;
 import android.app.Service;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.annotation.Target;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -33,6 +34,11 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
+
 public class MainActivity extends AppCompatActivity {
     private SeekBar seekbar1,seekbar2,seekbar3,seekbar4;
     private EditText edittext1,mes;
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private int manual_throttle=0,pid_throttle=50;
     private boolean sendOkFlag=false;
     String json;
+    int LastAngle, LastStrength;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
         seekbar1=(SeekBar)findViewById(R.id.seekBar);
         seekbar2=(SeekBar)findViewById(R.id.seekBar2);
-        seekbar3=(SeekBar)findViewById(R.id.seekBar3);
-        seekbar4=(SeekBar)findViewById(R.id.seekBar4);
+      //  seekbar3=(SeekBar)findViewById(R.id.seekBar3);
+      //  seekbar4=(SeekBar)findViewById(R.id.seekBar4);
         edittext1=(EditText)findViewById(R.id.editText);
         textview=(TextView)findViewById(R.id.textView);
-        textview2=(TextView)findViewById(R.id.textView2);
+    //    textview2=(TextView)findViewById(R.id.textView2);
         receive=(TextView)findViewById(R.id.receive);
         mes=(EditText)findViewById(R.id.instruction);
         on=(Button)findViewById(R.id.buttonon);
@@ -63,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         send=(Button)findViewById(R.id.buttonsend);
         heion=(Button)findViewById(R.id.heion);
         heioff=(Button)findViewById(R.id.heioff);
+
+       // mRockerView.findViewById(R.id.myrocker);
         new Thread(new Runnable() {
 
             DatagramPacket datagrampacket = null;
@@ -150,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         });
         seekbar1.setProgress(0);
         seekbar2.setProgress(50);
-        seekbar3.setProgress(50);
-        seekbar4.setProgress(50);
+      //  seekbar3.setProgress(50);
+      //  seekbar4.setProgress(50);
         seekbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -179,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress() + " ");
-                UdpClient("a" + seekBar.getProgress() + "!");
+                UdpClient("c" + seekBar.getProgress() + "!");
                 if(seekBar.getProgress()==50)
                     vibrator.vibrate(100);
             }
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        seekbar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      /*  seekbar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textview.setText(seekBar.getProgress() + " ");
@@ -221,13 +230,60 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
+        });*/
+        JoystickView joystick = (JoystickView) findViewById(R.id.joystick);
+
+        joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
+            @Override
+            public void onMove(int angle, int strength) {
+                double x,y;
+                Log.e("test", "ang" + angle + "st" + strength);
+                if(angle!=LastAngle&&strength!=LastStrength) {
+
+                    LastAngle=angle;LastStrength=strength;
+                    // do whatever you want
+                    if (angle >= 0 && angle < 90) {
+                        x = -sin(angle/180.0*PI) * strength / 100*50;
+                        y = cos(angle/180.0*PI) * strength / 100*50;
+                    } else if (angle >= 90 && angle < 180) {
+                        angle = 180 - angle;
+                        x = -sin(angle/180.0*PI) * strength / 100*50;
+                        y = -cos(angle/180.0*PI) * strength / 100*50;
+                    } else if (angle >= 180 && angle < 270) {
+                        angle = 270 - angle;
+                        x = sin(angle/180.0*PI) * strength / 100*50;
+                        y = -cos(angle/180.0*PI) * strength / 100*50;
+                    } else {
+                        angle = 360 - angle;
+                        x = sin(angle/180.0*PI) * strength / 100*50;
+                        y = cos(angle/180.0*PI) * strength / 100*50;
+                    }
+                    x=-x;
+                    Log.e("test", "x " +(float) x + " y " +(float) y);
+                    textview.setText("x" +(float) x + " y " +(float) y);
+                   UdpClient("b" +(float) x + "!");
+                  /* try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                     }
+*/
+
+                    UdpClient("a" + (float)y + "!");
+                    if(strength<3)
+                        vibrator.vibrate(100);
+                }
+                }
+
+
         });
+
+
 
     }
     public boolean UdpClient(final String sendStr){
          final String netAddress = edittext1.getText().toString();
          final int PORT = 8081;
-     for(int i=0;i<5;i++) {
+     for(int i=0;i<2;i++) {
          new Thread(new Runnable() {
              @Override
              public void run() {
@@ -263,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
              }
          }).start();
          try {
-             Thread.sleep(50);
+             Thread.sleep(30);
          } catch (InterruptedException e) {
 
          }
