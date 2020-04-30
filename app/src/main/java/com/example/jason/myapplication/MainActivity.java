@@ -251,8 +251,8 @@ public class MainActivity extends AppCompatActivity {
                         y = -cos(angle/180.0*PI) * strength / 100*50;
                     } else if (angle >= 180 && angle < 270) {
                         angle = 270 - angle;
-                        x = sin(angle/180.0*PI) * strength / 100*50;
-                        y = -cos(angle/180.0*PI) * strength / 100*50;
+                        x = cos(angle/180.0*PI) * strength / 100*50;
+                        y = -sin(angle/180.0*PI) * strength / 100*50;
                     } else {
                         angle = 360 - angle;
                         x = sin(angle/180.0*PI) * strength / 100*50;
