@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.jason.myapplication.MainActivity"> -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <!-- <SeekBar
+
+                android:layout_width="9dp"
+                android:layout_height="match_parent"
+                android:max="100" />-->
+            <cn.uav.control.uavcontroller.VerticalSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="99dp"
+                android:layout_height="306dp"
+                android:max="100"
+                android:maxWidth="50dip"
+                android:minWidth="50dip"
+                android:progress="50" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.24"
+            android:orientation="vertical">
+
+            <!-- <SeekBar
+                android:id="@+id/seekBar2"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:max="100" /> -->
+            <cn.uav.control.uavcontroller.VerticalSeekBar
+                android:id="@+id/seekBar2"
+                android:layout_width="37dp"
+                android:layout_height="304dp"
+                android:max="100"
+                android:maxWidth="50dip"
+                android:minWidth="50dip"
+                android:progress="50" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:orientation="vertical">
+
+            <cn.uav.control.uavcontroller.VerticalSeekBar
+                android:id="@+id/pitchmic"
+                android:layout_width="37dp"
+                android:layout_height="161dp"
+                android:max="40"
+                android:maxWidth="50dip"
+                android:minWidth="50dip"
+                android:progress="20" />
+
+            <cn.uav.control.uavcontroller.VerticalSeekBar
+                android:id="@+id/rollmic"
+                android:layout_width="37dp"
+                android:layout_height="172dp"
+                android:max="40"
+                android:maxWidth="50dip"
+                android:minWidth="50dip"
+                android:progress="20" />
+
+        </LinearLayout>
+
+        <!-- <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="前进"
+            android:id="@+id/textView2"
+            android:layout_weight="1" /> -->
+
+
+        <LinearLayout
+            android:layout_width="165dp"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="top"
+                    android:maxLines="1"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:text="信息"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/receive"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:maxLines="6"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+
+                    android:text="信息"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="192.168.4.1"
+                    android:textSize="12dp" />
+
+                <EditText
+                    android:id="@+id/instruction"
+                    android:layout_width="43dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.65" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/buttonsend"
+                        android:layout_width="49dp"
+                        android:layout_height="wrap_content"
+                        android:text="发送"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/buttonon"
+                        android:layout_width="49dp"
+                        android:layout_height="wrap_content"
+                        android:allowUndo="true"
+                        android:text="开启"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/info"
+                        android:layout_width="49dp"
+                        android:layout_height="wrap_content"
+                        android:text="信息"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/heion"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="定高开"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/chirp"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="鸣叫开"
+                        android:textSize="12dp" />
+
+
+                    <Button
+                        android:id="@+id/button5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="待定" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/vertical"
+                        android:layout_width="55dp"
+                        android:layout_height="7dp"
+                        android:layout_weight="1"
+                        android:text="水平" />
+
+                    <Button
+                        android:id="@+id/control"
+                        android:layout_width="match_parent"
+                        android:layout_height="11dp"
+                        android:layout_weight="1"
+                        android:text="软控" />
+
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:text="待定" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar3"
+            android:max="100"
+            android:layout_weight="1" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar4"
+            android:max="100"
+            android:layout_weight="1" />-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:gravity="bottom|right"
+            android:orientation="vertical">
+
+            <io.github.controlwear.virtual.joystick.android.JoystickView
+                android:id="@+id/joystick"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="top"
+                app:JV_backgroundColor="#009688"
+                app:JV_borderColor="#00796B"
+                app:JV_borderWidth="1dp"
+                app:JV_buttonColor="#FF6E40"
+                app:JV_buttonSizeRatio="15%" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
